@@ -1,0 +1,5 @@
+import '@refinitiv-ui/halo-theme/dark/imports/native-elements'
+import '@refinitiv-ui/elements/calendar/themes/halo/dark'
+import '@refinitiv-ui/elements/item/themes/halo/dark'
+import '@refinitiv-ui/elements/toggle/themes/halo/dark'
+import '@refinitiv-ui/elements/datetime-picker/themes/halo/dark'

@@ -1,0 +1,32 @@
+{
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier", "react-hooks"],
+  "rules": {
+    "import/prefer-default-export": "off",
+    "react/no-array-index-key": "off",
+    "react/prop-types": "off",
+    "react/button-has-type": "off",
+    "no-confusing-arrow": "off",
+    "react/default-props-match-prop-types": "off",
+    "react/require-default-props": "off",
+    "arrow-body-style": "off",
+    "consistent-return": "off",
+    "array-callback-return": "off",
+    "import/no-unresolved": "off",
+    "no-param-reassign": "off",
+    "camelcase": "off",
+    "react/no-find-dom-node": "off",
+    "react/no-string-refs": "off",
+    "no-multi-assign": "off",
+    "no-underscore-dangle": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react-hooks/rules-of-hooks": "off",
+    "react/jsx-filename-extension": "off",
+    "no-undef": "off",
+    "import/no-named-as-default": 0,
+    "import/no-cycle": "off",
+    "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "react/jsx-props-no-spreading": "off"
+  }
+}
