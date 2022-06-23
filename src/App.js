@@ -22,11 +22,14 @@ function App() {
     const checked = detail.value
     const newPoints = checked ? tokenPoints + 1 : tokenPoints - 1
 
-    if (!checked && selectedDates.length) {
-      setSelectedDates(selectedDates.shift())
+    if (!checked && tokenPoints < selectedDates.length) {
+      const newDates = [...selectedDates]
+      newDates.splice(-1)
+      setSelectedDates(newDates)
+      setTokenPoints(0)
+    } else {
+      setTokenPoints(newPoints)
     }
-
-    setTokenPoints(newPoints)
   }
 
   const handleSelectDate = (e) => {
@@ -49,6 +52,13 @@ function App() {
     }
   }
 
+  const handleClickRemove = (date) => {
+    setSelectedDates(
+      selectedDates.filter((selectedDate) => selectedDate !== date)
+    )
+    setTokenPoints(tokenPoints + 1)
+  }
+
   return (
     <div className="App">
       <LogoWrapper>
@@ -65,10 +75,21 @@ function App() {
         ))}
         <br />
         <Calendar
+          values={selectedDates}
           multiple
           onchange={handleSelectDate}
           disabled={!tokenPoints && !selectedDates.length}
         />
+        <div>
+          <p>Your love holidays:</p>
+          {!selectedDates.length && <p>None</p>}
+          {selectedDates.map((date, idx) => (
+            <div key={`date_${idx}`}>
+              <p>{date}</p>
+              <button onClick={() => handleClickRemove(date)}>Remove</button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
