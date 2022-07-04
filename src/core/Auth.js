@@ -51,7 +51,6 @@ export function AuthProvider({ children }) {
       }
       setLoading(false)
     } else {
-      console.error('Login failed !') // change to notification
       window.location.href = '/'
     }
   }
