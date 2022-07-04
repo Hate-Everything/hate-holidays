@@ -6,9 +6,10 @@ import { AuthProvider, RequireAuth } from './Auth'
 import Layout from './Layout'
 
 export default function Routes() {
+  console.log('baseurl =', process.env.REACT_APP_BASE_URL)
   return (
     <AuthProvider>
-      <BrowserRouter basename="/">
+      <BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
         <Router>
           <Route path="/login" element={<Login />} />
           <Route element={<Layout />}>
@@ -21,6 +22,7 @@ export default function Routes() {
               }
             />
           </Route>
+          <Route path="*" element={<div>No Match</div>} />
         </Router>
       </BrowserRouter>
     </AuthProvider>

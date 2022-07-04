@@ -31,6 +31,14 @@ export function AuthProvider({ children }) {
     }
   }, [])
 
+  const logout = (callback) => {
+    setLoading(true)
+    removeToken()
+    setUser(null)
+    callback()
+    setLoading(false)
+  }
+
   const login = async (code, callback) => {
     setLoading(true)
     const { data } = await authAccess.login(code)
@@ -42,15 +50,10 @@ export function AuthProvider({ children }) {
         callback()
       }
       setLoading(false)
+    } else {
+      console.error('Login failed !') // change to notification
+      window.location.href = '/'
     }
-  }
-
-  const logout = (callback) => {
-    setLoading(true)
-    removeToken()
-    setUser(null)
-    callback()
-    setLoading(false)
   }
 
   const value = { user, loading, login, logout }

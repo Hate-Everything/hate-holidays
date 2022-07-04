@@ -34,6 +34,11 @@ function Login() {
     }
   }, [])
 
+  console.log(
+    'REACT_APP_GITHUB_CLIENT_ID -',
+    process.env.REACT_APP_GITHUB_CLIENT_ID
+  )
+
   return (
     <Container>
       <StyledLink
