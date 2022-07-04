@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Routes as Router, Route } from 'react-router-dom'
+import { Routes as Router, Route, HashRouter } from 'react-router-dom'
 import Home from '../components/pages/Home'
 import Login from '../components/pages/Login'
 import { AuthProvider, RequireAuth } from './Auth'
@@ -10,7 +10,7 @@ export default function Routes() {
   console.log('baseurl =', process.env.REACT_APP_BASE_URL)
   return (
     <AuthProvider>
-      <BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
+      <HashRouter basename={process.env.REACT_APP_BASE_URL}>
         <Router>
           <Route path="/login" element={<Login />} />
           <Route element={<Layout />}>
@@ -25,7 +25,7 @@ export default function Routes() {
           </Route>
           <Route path="*" element={<div>No Match</div>} />
         </Router>
-      </BrowserRouter>
+      </HashRouter>
     </AuthProvider>
   )
 }
