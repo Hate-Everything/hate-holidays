@@ -6,6 +6,7 @@ import { AuthProvider, RequireAuth } from './Auth'
 import Layout from './Layout'
 
 export default function Routes() {
+  console.log('node env =', process.env.REACT_APP_NODE_ENV)
   console.log('baseurl =', process.env.REACT_APP_BASE_URL)
   return (
     <AuthProvider>
