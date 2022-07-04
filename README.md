@@ -1,4 +1,4 @@
-https://hate-everything.github.io/hate-holidays/login
+https://hate-everything.github.io/hate-holidays
 
 # Getting Started with Create React App
 
