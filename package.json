@@ -2,7 +2,7 @@
   "name": "hate-holidays",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://hate-everything.github.io/hate-holidays",
+  "homepage": "/",
   "dependencies": {
     "@backlineint/results-tracker": "^1.0.0",
     "@lit-labs/react": "^1.0.4",
@@ -22,7 +22,7 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "PUBLIC_URL=/ react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -1,4 +1,4 @@
-https://hate-everything.github.io/hate-holidays
+https://steady-douhua-2ce07b.netlify.app/
 
 # Getting Started with Create React App
 
