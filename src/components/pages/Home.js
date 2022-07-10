@@ -64,9 +64,7 @@ function Home() {
     }
   }
 
-  const handleViewChange = (e) => {
-    console.log('view =', e.detail.value)
-  }
+  const handleViewChange = () => {}
 
   const handleSubmit = async () => {
     setLoading(true)
