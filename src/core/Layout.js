@@ -32,6 +32,10 @@ function ProfileMenu({ user, slot, logout }) {
     setOpened(!opened)
   }
 
+  const handleClosePopup = () => {
+    setOpened(false)
+  }
+
   const handleClickLogout = () => {
     logout(() => {
       navigate('/', { replace: true })
@@ -51,6 +55,7 @@ function ProfileMenu({ user, slot, logout }) {
         position="bottom-end"
         positionTarget={imageRef.current}
         opened={opened}
+        onoutsideclick={handleClosePopup}
       >
         <ef-item type="header">Signed in as {login}</ef-item>
         <ef-item onClick={handleClickLogout}>Logout</ef-item>

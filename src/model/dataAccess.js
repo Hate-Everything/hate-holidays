@@ -20,10 +20,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
-const initUserHolidays = (userId) => {
+const initUserHolidays = (userId, username) => {
   const userHolidaysRef = collection(db, 'userHolidays')
   return addDoc(userHolidaysRef, {
     id: userId,
+    name: username,
     holidays: defaultHolidaysDates,
   })
 }

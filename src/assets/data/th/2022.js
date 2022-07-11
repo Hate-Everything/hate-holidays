@@ -37,4 +37,9 @@ export const holidays = [
   },
 ]
 
+export const holidaysMapping = holidays.reduce((acc, holiday) => {
+  const { date, name } = holiday
+  return { ...acc, [date]: name }
+}, {})
+
 export const holidaysDates = holidays.map((holiday) => holiday.date)
