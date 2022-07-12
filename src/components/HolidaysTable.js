@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import Label from './Label'
 import { holidaysMapping } from '../assets/data/th/2022'
 
 const Container = styled.div`
