@@ -35,7 +35,6 @@ const DateText = styled.h6`
   display: inline-block;
   width: 35px;
   color: ${(props) => (props.isHighlight ? 'white' : 'gray')};
-  text-decoration: ${(props) => (props.isHighlight ? 'underline' : 'none')};
 `
 
 const StyledLabel = styled(Label)`
