@@ -141,8 +141,7 @@ function Home() {
     info('Data saved successfully.', 2000)
   }
 
-  const changeCalendarView = calendarView => {
-    calendarRef.current.view = calendarView
+  const handleClickTableTitle = (calendarView) => {
     setView(calendarView)
   }
 
@@ -167,6 +166,7 @@ function Home() {
           min={currentDate}
           max={lastDate}
           values={holidays}
+          view={view}
           onchange={handleChange}
           viewchange={handleViewChange}
         />
@@ -189,7 +189,7 @@ function Home() {
           holidays={holidays}
           view={view}
           defaultHolidays={defaultHolidays}
-          changeCalendarView={changeCalendarView}
+          handleClickTableTitle={handleClickTableTitle}
         />
       </Holidays>
     </Main>
