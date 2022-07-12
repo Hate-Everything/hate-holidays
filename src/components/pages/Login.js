@@ -13,7 +13,7 @@ const Container = styled.div`
 const StyledLink = styled.a`
   position: absolute;
   left: 45%;
-  top: 45%;
+  top: 470px;
   width: 250px;
   border: 1px white solid;
   display: flex;
@@ -34,7 +34,7 @@ const StyledLink = styled.a`
 const Bomber = styled.div`
   position: absolute;
   left: 35%;
-  top: 35%;
+  top: 400px;
   transform: scale(5);
   width: 1px;
   height: 1px;
@@ -45,7 +45,7 @@ const Bomber = styled.div`
 const HateHoliday = styled.div`
   position: absolute;
   left: 40%;
-  top: 15%;
+  top: 100px;
   width: 1px;
   height: 1px;
   transform: scale(20);
