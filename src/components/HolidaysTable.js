@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import '@refinitiv-ui/elements/label'
-import { holidaysMapping } from '../assets/data/th/2022'
+import Label from './Label'
+import {
+  holidays as defaultHolidays,
+  holidaysMapping,
+} from '../assets/data/th/2022'
 
 const Container = styled.div`
   display: inline-flex;
@@ -35,33 +38,71 @@ const ItemContainer = styled.div`
 const DateText = styled.h6`
   display: inline-block;
   width: 35px;
-  color: ${(props) => (props.isHighlight ? '#F05D5E' : 'white')};
+  color: ${(props) => (props.isHighlight ? 'white' : 'gray')};
   text-decoration: ${(props) => (props.isHighlight ? 'underline' : 'none')};
 `
+
+const StyledLabel = styled(Label)`
+  width: 200px;
+  color: ${(props) => (props.isHighlight ? 'white' : 'gray')};
+`
+
+const getDay = (date) => {
+  return date.toLocaleString('default', {
+    day: '2-digit',
+  })
+}
+
+const getMonth = (date) => {
+  return date.toLocaleString('default', { month: 'short' })
+}
+
+const getView = (date) => {
+  return `${date.getFullYear()}-${date.toLocaleString('default', {
+    month: '2-digit',
+  })}`
+}
 
 function HolidaysTable({ holidays, view, style }) {
   if (!holidays) return
 
   const holidayItems = {}
 
-  holidays.sort().forEach((holiday) => {
-    const date = new Date(holiday)
-    const month = date.toLocaleString('default', { month: 'short' })
+  defaultHolidays.forEach((holiday) => {
+    const date = new Date(holiday.date)
+    const month = getMonth(date)
 
     if (!holidayItems[month]) {
       holidayItems[month] = []
     }
-
     holidayItems[month].push({
-      name: holidaysMapping[holiday] || 'My Holiday',
-      date: date.toLocaleString('default', {
-        day: '2-digit',
-      }),
-      view: `${date.getFullYear()}-${date.toLocaleString('default', {
-        month: '2-digit',
-      })}`,
-      isDefaultHoliday: !!holidaysMapping[holiday],
+      name: holiday.name,
+      date: getDay(date),
+      view: getView(date),
+      isDefaultHoliday: true,
     })
+  })
+
+  holidays.sort().forEach((holiday) => {
+    const date = new Date(holiday)
+    const day = getDay(date)
+    const month = getMonth(date)
+
+    if (!holidayItems[month]) {
+      holidayItems[month] = []
+    }
+    const defaultHoliday = holidayItems[month].find((item) => item.date === day)
+
+    if (defaultHoliday) {
+      defaultHoliday.isDefaultHoliday = false
+    } else {
+      holidayItems[month].push({
+        name: holidaysMapping[holiday] || 'My Holiday',
+        date: getDay(date),
+        view: getView(date),
+        isDefaultHoliday: false,
+      })
+    }
   })
 
   const viewMonth = new Date(`${view}-01`).toLocaleDateString('default', {
@@ -72,16 +113,18 @@ function HolidaysTable({ holidays, view, style }) {
     <Container isActive={key === viewMonth} key={key} style={style}>
       <Title isActive={key === viewMonth}>{key}</Title>
       <ItemContainer>
-        {holidayItems[key].map((item) => (
-          <div key={item.date}>
-            <DateText isHighlight={!item.isDefaultHoliday}>
-              {item.date}
-            </DateText>
-            <ef-label style={{ width: 200 }} line-clamp="1">
-              {item.name}
-            </ef-label>
-          </div>
-        ))}
+        {holidayItems[key]
+          .sort((a, b) => a.date - b.date)
+          .map((item) => (
+            <div key={item.date}>
+              <DateText isHighlight={!item.isDefaultHoliday}>
+                {item.date}
+              </DateText>
+              <StyledLabel isHighlight={!item.isDefaultHoliday} line-clamp="1">
+                {item.name}
+              </StyledLabel>
+            </div>
+          ))}
       </ItemContainer>
     </Container>
   ))
