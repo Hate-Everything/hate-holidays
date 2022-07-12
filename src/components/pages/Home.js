@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { info } from '@refinitiv-ui/elements/notification'
+import { info, error } from '@refinitiv-ui/elements/notification'
 import { AuthContext } from '../../core/Auth'
 import dataAccess from '../../model/dataAccess'
 import LoadingScreen from '../LoadingScreen'
@@ -60,16 +60,21 @@ function Home() {
 
     const getUserHolidays = async () => {
       setLoading(true)
-      const data = await dataAccess.getUserHolidaysByUserId(auth.user.id)
-      if (data && data.id) {
-        setHolidays(data.holidays)
-        setFirebaseKey(data.firebaseKey)
-        if (calendarRef && calendarRef.current) {
-          setView(calendarRef.current.view)
+      try {
+        const data = await dataAccess.getUserHolidaysByUserId(auth.user.id)
+        if (data && data.id) {
+          setHolidays(data.holidays)
+          setFirebaseKey(data.firebaseKey)
+          if (calendarRef && calendarRef.current) {
+            setView(calendarRef.current.view)
+          }
+          setLoading(false)
+        } else {
+          initUserHolidays()
+          setLoading(false)
         }
-        setLoading(false)
-      } else {
-        initUserHolidays()
+      } catch (err) {
+        error('Cannot get data! Please refresh the page.', 2000)
         setLoading(false)
       }
     }
