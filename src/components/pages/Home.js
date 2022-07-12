@@ -9,17 +9,24 @@ import HolidaysTable from '../HolidaysTable'
 import tokenImage from '../../assets/images/token.png'
 import { getCurrentDate, getLastDayOfYear } from '../../helpers/date'
 
+const Main = styled.main`
+  display: flex;
+  flex-wrap: wrap-reverse;
+  gap: 5px;
+  padding: 10px;
+`
+
 const StyledCalendar = styled(Calendar)`
   display: block;
   flex: 1;
-  font-size: 14px;
+  font-size: var(--font-size);
   &::part(btn-next),
   &::part(btn-prev) {
     width: 30px;
     height: 30px;
   }
   &::part(btn-view) {
-    font-size: 14px;
+    font-size: var(--font-size);
   }
 `
 
@@ -30,6 +37,24 @@ const TokenContainer = styled.div`
   font-weight: 600;
   top: 11px;
   right: 86px;
+`
+
+const Holidays = styled.div`
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 5px;
+
+  @media (max-width: 768px) {
+    min-width: 250px;
+    max-height: 320px;
+    overflow-y: scroll;
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    max-height: 565px;
+    overflow-y: scroll;
+  }
 `
 
 function Home() {
@@ -117,7 +142,7 @@ function Home() {
   }
 
   return (
-    <div style={{ display: 'flex', padding: 10 }}>
+    <Main style={{ display: 'flex', padding: 30 }}>
       <TokenContainer>
         <img
           src={tokenImage}
@@ -128,7 +153,7 @@ function Home() {
         x {tokenAmount}
       </TokenContainer>
       <LoadingScreen loading={auth.loading || loading} />
-      <div style={{ flex: 1, marginRight: 20 }}>
+      <div style={{ flex: 1 }}>
         <StyledCalendar
           lang="en"
           ref={calendarRef}
@@ -145,23 +170,23 @@ function Home() {
           style={{
             width: '100%',
             padding: 20,
-            marginTop: 10,
+            marginTop: 5,
+            fontWeight: 'bold',
             color: 'black',
             backgroundColor: 'var(--tertiary-color)',
-            borderRadius: 3,
           }}
         >
           SAVE MY LOVELY HOLIDAYS
         </ef-button>
       </div>
-      <div style={{ flex: 2 }}>
+      <Holidays>
         <HolidaysTable
           holidays={holidays}
           view={view}
           defaultHolidays={defaultHolidays}
-        />
-      </div>
-    </div>
+        ></HolidaysTable>
+      </Holidays>
+    </Main>
   )
 }
 

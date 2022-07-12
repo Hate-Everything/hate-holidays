@@ -8,11 +8,7 @@ const Container = styled.div`
   border: 1px solid;
   border-color: rgba(255, 255, 255, 0.2);
   transition: border-color ease-in-out 0.25s;
-  margin: 5px;
-  margin-top: 0px;
-  min-width: 280px;
-  min-height: 200px;
-  border-radius: 3px;
+  min-height: 270px;
 `
 
 const Title = styled.div`
@@ -21,10 +17,8 @@ const Title = styled.div`
   background-color: ${(props) =>
     props.isActive ? `var(--primary-color)` : 'rgba(255, 255, 255, 0.2)'};
   font-weight: 600;
+  padding: 2px 0;
   transition: background-color ease-in-out 0.25s;
-  padding: 5px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
 `
 
 const ItemContainer = styled.div`
@@ -33,7 +27,7 @@ const ItemContainer = styled.div`
 
 const DateText = styled.h6`
   display: inline-block;
-  width: 35px;
+  margin-right: 5px;
   color: ${(props) => (props.isHighlight ? 'white' : 'gray')};
 `
 
@@ -86,12 +80,10 @@ function HolidaysTable({ holidays, view, style, defaultHolidays }) {
     const date = new Date(holiday)
     const day = getDay(date)
     const month = getMonth(date, true)
-
     if (!holidayItems[month]) {
       holidayItems[month] = []
     }
     const defaultHoliday = holidayItems[month].find((item) => item.date === day)
-
     if (defaultHoliday) {
       defaultHoliday.isDefaultHoliday = false
     } else {
@@ -103,7 +95,6 @@ function HolidaysTable({ holidays, view, style, defaultHolidays }) {
       })
     }
   })
-
   holidayItems = Object.keys(holidayItems)
     .sort()
     .map((key) => {
