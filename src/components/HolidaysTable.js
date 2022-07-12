@@ -37,6 +37,11 @@ const DateText = styled.h6`
   text-decoration: ${(props) => (props.isHighlight ? 'underline' : 'none')};
 `
 
+const StyledLabel = styled(Label)`
+  width: 200px;
+  color: ${(props) => (props.isHighlight ? 'white' : 'gray')};
+`
+
 const getDay = (date) => {
   return date.toLocaleString('default', {
     day: '2-digit',
@@ -46,11 +51,6 @@ const getDay = (date) => {
 const getMonth = (date, isDigit) => {
   return date.toLocaleString('default', { month: isDigit ? '2-digit' : 'long' })
 }
-
-const StyledLabel = styled(Label)`
-  width: 200px;
-  color: ${(props) => (props.isHighlight ? 'white' : 'gray')};
-`
 
 const getView = (date) => {
   return `${date.getFullYear()}-${date.toLocaleString('default', {
