@@ -21,6 +21,10 @@ const StyledCalendar = styled(Calendar)`
   display: block;
   flex: 1;
   font-size: var(--font-size);
+
+  &::part(btn-view) {
+    font-size: var(--font-size);
+  }
 `
 
 const TokenContainer = styled.div`
