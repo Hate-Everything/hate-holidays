@@ -153,7 +153,7 @@ function Home() {
         x {tokenAmount}
       </TokenContainer>
       <LoadingScreen loading={auth.loading || loading} />
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, maxWidth: 600 }}>
         <StyledCalendar
           lang="en"
           ref={calendarRef}
