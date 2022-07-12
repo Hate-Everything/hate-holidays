@@ -76,7 +76,7 @@ export const holidays = [
     name: 'Substitution for Constitution Day',
   },
   {
-    date: '2022-12-25',
+    date: '2022-12-26',
     name: 'Christmas Day',
   },
 ]
