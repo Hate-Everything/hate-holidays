@@ -116,6 +116,11 @@ function Home() {
     info('Data saved successfully.', 2000)
   }
 
+  const changeCalendarView = calendarView => {
+    calendarRef.current.view = calendarView
+    setView(calendarView)
+  }
+
   return (
     <div style={{ display: 'flex', padding: 10 }}>
       <TokenContainer>
@@ -159,6 +164,7 @@ function Home() {
           holidays={holidays}
           view={view}
           defaultHolidays={defaultHolidays}
+          changeCalendarView={changeCalendarView}
         />
       </div>
     </div>
