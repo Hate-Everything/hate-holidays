@@ -10,10 +10,17 @@ import { holidaysDates } from '../../assets/data/th/2022'
 import tokenImage from '../../assets/images/token.png'
 import { getCurrentDate, getLastDayOfYear } from '../../helpers/date'
 
+const Main = styled.main`
+  display: flex;
+  flex-wrap: wrap-reverse;
+  gap: 5px;
+  padding: 10px;
+`
+
 const StyledCalendar = styled(Calendar)`
   display: block;
   flex: 1;
-  font-size: 14px;
+  font-size: var(--font-size);
 `
 
 const TokenContainer = styled.div`
@@ -23,6 +30,24 @@ const TokenContainer = styled.div`
   font-weight: bold;
   top: 11px;
   right: 86px;
+`
+
+const Holidays = styled.div`
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 5px;
+
+  @media (max-width: 768px) {
+    min-width: 250px;
+    max-height: 320px;
+    overflow-y: scroll;
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    max-height: 565px;
+    overflow-y: scroll;
+  }
 `
 
 function Home() {
@@ -82,7 +107,7 @@ function Home() {
   const lastDate = getLastDayOfYear()
 
   return (
-    <div style={{ display: 'flex', padding: 30 }}>
+    <Main>
       <TokenContainer>
         <img
           src={tokenImage}
@@ -93,7 +118,7 @@ function Home() {
         x {holidaysDates.length - holidays.length}
       </TokenContainer>
       <LoadingScreen loading={auth.loading || loading} />
-      <div style={{ flex: 1, marginRight: 20 }}>
+      <div style={{ flex: 1 }}>
         <StyledCalendar
           ref={calendarRef}
           multiple
@@ -109,18 +134,18 @@ function Home() {
           style={{
             width: '100%',
             padding: 20,
-            marginTop: 10,
+            marginTop: 5,
             backgroundColor: 'var(--primary-color)',
-            borderRadius: 3,
+            fontWeight: 'bold',
           }}
         >
           SAVE MY LOVELY HOLIDAYS
         </ef-button>
       </div>
-      <div style={{ flex: 2 }}>
+      <Holidays>
         <HolidaysTable holidays={holidays} view={view} />
-      </div>
-    </div>
+      </Holidays>
+    </Main>
   )
 }
 

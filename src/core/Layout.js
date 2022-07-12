@@ -9,13 +9,13 @@ import OverlayMenu from '../components/OverlayMenu'
 const ImageAvatar = styled.img`
   cursor: pointer;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
 `
 
 const StyledHeader = styled(Header)`
   height: 50px;
-  padding: 20px 40px;
+  padding: 0 40px;
 `
 
 function ProfileMenu({ user, slot, logout }) {

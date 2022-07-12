@@ -10,10 +10,7 @@ const Container = styled.div`
   border-color: ${(props) =>
     props.isActive ? `var(--secondary-color)` : 'rgba(255, 255, 255, 0.2)'};
   transition: border-color ease-in-out 0.25s;
-  margin: 5px;
-  min-width: 280px;
-  min-height: 200px;
-  border-radius: 3px;
+  min-height: 270px;
 `
 
 const Title = styled.div`
@@ -22,10 +19,8 @@ const Title = styled.div`
   background-color: ${(props) =>
     props.isActive ? `var(--primary-color)` : 'rgba(255, 255, 255, 0.2)'};
   font-weight: bold;
+  padding: 2px 0;
   transition: background-color ease-in-out 0.25s;
-  padding: 5px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
 `
 
 const ItemContainer = styled.div`
@@ -34,8 +29,8 @@ const ItemContainer = styled.div`
 
 const DateText = styled.h6`
   display: inline-block;
-  width: 35px;
-  color: ${(props) => (props.isHighlight ? '#F05D5E' : 'white')};
+  margin-right: 5px;
+  color: ${(props) => (props.isHighlight ? 'var(--error-color)' : 'white')};
   text-decoration: ${(props) => (props.isHighlight ? 'underline' : 'none')};
 `
 
@@ -46,7 +41,7 @@ function HolidaysTable({ holidays, view, style }) {
 
   holidays.sort().forEach((holiday) => {
     const date = new Date(holiday)
-    const month = date.toLocaleString('default', { month: 'short' })
+    const month = date.toLocaleString('default', { month: 'long' })
 
     if (!holidayItems[month]) {
       holidayItems[month] = []
@@ -65,7 +60,7 @@ function HolidaysTable({ holidays, view, style }) {
   })
 
   const viewMonth = new Date(`${view}-01`).toLocaleDateString('default', {
-    month: 'short',
+    month: 'long',
   })
 
   return Object.keys(holidayItems).map((key) => (
@@ -77,7 +72,7 @@ function HolidaysTable({ holidays, view, style }) {
             <DateText isHighlight={!item.isDefaultHoliday}>
               {item.date}
             </DateText>
-            <ef-label style={{ width: 200 }} line-clamp="1">
+            <ef-label style={{ width: 230 }} line-clamp="1">
               {item.name}
             </ef-label>
           </div>
