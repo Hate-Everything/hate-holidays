@@ -14,6 +14,11 @@ const Container = styled.div`
 const Title = styled.div`
   display: flex;
   justify-content: center;
+  cursor: pointer;
+  ${(props) =>
+    !props.isActive &&
+    `&:hover{background-color: var(--secondary-color);}`
+  }
   background-color: ${(props) =>
     props.isActive ? `var(--primary-color)` : 'rgba(255, 255, 255, 0.2)'};
   font-weight: 600;
@@ -52,7 +57,7 @@ const getView = (date) => {
   })}`
 }
 
-function HolidaysTable({ holidays, view, style, defaultHolidays }) {
+function HolidaysTable({ holidays, view, style, defaultHolidays, changeCalendarView }) {
   if (!holidays) return
 
   let holidayItems = {}
@@ -113,7 +118,7 @@ function HolidaysTable({ holidays, view, style, defaultHolidays }) {
       key={item.month}
       style={style}
     >
-      <Title isActive={item.month === viewMonth}>{item.month}</Title>
+      <Title isActive={item.month === viewMonth} onClick={() => changeCalendarView(item.holidays[0].view)}>{item.month}</Title>
       <ItemContainer>
         {item.holidays
           .sort((a, b) => a.date - b.date)
