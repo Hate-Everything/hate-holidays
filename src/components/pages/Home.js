@@ -43,7 +43,8 @@ function Home() {
 
   useEffect(() => {
     const loadDefaultHolidays = async () => {
-      const data = await import(`../../assets/data/th/${currentYear}.js`)
+      const { lang } = document.documentElement
+      const data = await import(`../../assets/data/${lang}/${currentYear}.js`)
       if (data && data.default) {
         setDefaultHolidays(data.default.holidays)
       }
@@ -116,6 +117,7 @@ function Home() {
       <LoadingScreen loading={auth.loading || loading} />
       <div style={{ flex: 1, marginRight: 20 }}>
         <StyledCalendar
+          lang="en"
           ref={calendarRef}
           multiple
           weekdaysOnly
