@@ -3,12 +3,17 @@ body {
   font-family: 'Prompt', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  
   --font-size: 16px;
-  --primary-color: #0f7173;
-  --secondary-color: #0B4E4F;
-  --tertiary-color:  #0ee28a;
+  --primary-color: var(--color-scheme-primary);
+  --secondary-color: var(--color-scheme-secondary);
+  --tertiary-color: #0ee28a;
   --error-color: #F05D5E;
 
   font-size: var(--font-size);
+}
+
+ef-notification {
+  --background-color: var(--tertiary-color);
+  color: black;
 }

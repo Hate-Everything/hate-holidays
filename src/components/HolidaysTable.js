@@ -1,17 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import Label from './Label'
-import {
-  holidays as defaultHolidays,
-  holidaysMapping,
-} from '../assets/data/th/2022'
 
 const Container = styled.div`
   display: inline-flex;
   flex-direction: column;
   border: 1px solid;
-  border-color: ${(props) =>
-    props.isActive ? `var(--secondary-color)` : 'rgba(255, 255, 255, 0.2)'};
+  border-color: rgba(255, 255, 255, 0.2);
   transition: border-color ease-in-out 0.25s;
   min-height: 270px;
 `
@@ -21,7 +16,7 @@ const Title = styled.div`
   justify-content: center;
   background-color: ${(props) =>
     props.isActive ? `var(--primary-color)` : 'rgba(255, 255, 255, 0.2)'};
-  font-weight: bold;
+  font-weight: 600;
   padding: 2px 0;
   transition: background-color ease-in-out 0.25s;
 `
@@ -34,7 +29,6 @@ const DateText = styled.h6`
   display: inline-block;
   margin-right: 5px;
   color: ${(props) => (props.isHighlight ? 'white' : 'gray')};
-  text-decoration: ${(props) => (props.isHighlight ? 'underline' : 'none')};
 `
 
 const StyledLabel = styled(Label)`
@@ -58,10 +52,14 @@ const getView = (date) => {
   })}`
 }
 
-function HolidaysTable({ holidays, view, style }) {
+function HolidaysTable({ holidays, view, style, defaultHolidays }) {
   if (!holidays) return
 
   let holidayItems = {}
+
+  if (!defaultHolidays.length) {
+    return
+  }
 
   defaultHolidays.forEach((holiday) => {
     const date = new Date(holiday.date)
@@ -90,7 +88,7 @@ function HolidaysTable({ holidays, view, style }) {
       defaultHoliday.isDefaultHoliday = false
     } else {
       holidayItems[month].push({
-        name: holidaysMapping[holiday] || 'My Holiday',
+        name: 'My Holiday',
         date: getDay(date),
         view: getView(date),
         isDefaultHoliday: false,
@@ -107,9 +105,7 @@ function HolidaysTable({ holidays, view, style }) {
       }
     })
 
-  const viewMonth = new Date(`${view}-01`).toLocaleDateString('default', {
-    month: 'long',
-  })
+  const viewMonth = getMonth(new Date(`${view}-01`))
 
   return holidayItems.map((item) => (
     <Container

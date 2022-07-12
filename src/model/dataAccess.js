@@ -9,7 +9,6 @@ import {
   doc,
   updateDoc,
 } from 'firebase/firestore'
-import { holidaysDates as defaultHolidaysDates } from '../assets/data/th/2022'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -20,12 +19,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
-const initUserHolidays = (userId, username) => {
+const initUserHolidays = (userId, username, dates) => {
   const userHolidaysRef = collection(db, 'userHolidays')
   return addDoc(userHolidaysRef, {
     id: userId,
     name: username,
-    holidays: defaultHolidaysDates,
+    holidays: dates,
   })
 }
 

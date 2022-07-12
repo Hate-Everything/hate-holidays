@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { info } from '@refinitiv-ui/elements/notification'
+import { info, error } from '@refinitiv-ui/elements/notification'
 import { AuthContext } from '../../core/Auth'
 import dataAccess from '../../model/dataAccess'
 import LoadingScreen from '../LoadingScreen'
 import Calendar from '../Calendar'
 import HolidaysTable from '../HolidaysTable'
-import { holidaysDates } from '../../assets/data/th/2022'
 import tokenImage from '../../assets/images/token.png'
 import { getCurrentDate, getLastDayOfYear } from '../../helpers/date'
 
@@ -21,7 +20,11 @@ const StyledCalendar = styled(Calendar)`
   display: block;
   flex: 1;
   font-size: var(--font-size);
-
+  &::part(btn-next),
+  &::part(btn-prev) {
+    width: 30px;
+    height: 30px;
+  }
   &::part(btn-view) {
     font-size: var(--font-size);
   }
@@ -31,7 +34,7 @@ const TokenContainer = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
-  font-weight: bold;
+  font-weight: 600;
   top: 11px;
   right: 86px;
 `
@@ -58,40 +61,64 @@ function Home() {
   const auth = useContext(AuthContext)
   const calendarRef = useRef()
   const [holidays, setHolidays] = useState([])
+  const [defaultHolidays, setDefaultHolidays] = useState([])
   const [loading, setLoading] = useState(false)
   const [firebaseKey, setFirebaseKey] = useState('')
   const [view, setView] = useState('')
+  const [currentYear, setCurrentYear] = useState('')
 
   useEffect(() => {
+    setCurrentYear(new Date().toLocaleString('default', { year: 'numeric' }))
+  }, [])
+
+  const currentDate = getCurrentDate()
+  const lastDate = getLastDayOfYear()
+
+  useEffect(() => {
+    const loadDefaultHolidays = async () => {
+      const { lang } = document.documentElement
+      const data = await import(`../../assets/data/${lang}/${currentYear}.js`)
+      if (data && data.default) {
+        setDefaultHolidays(data.default.holidays)
+      }
+    }
+
     const initUserHolidays = async () => {
-      await dataAccess.initUserHolidays(auth.user.id, auth.user.login)
-      setHolidays(holidaysDates)
+      const dates = defaultHolidays
+        .filter((holiday) => holiday.date >= currentDate)
+        .map((data) => data.date)
+      await dataAccess.initUserHolidays(auth.user.id, auth.user.login, dates)
+      setHolidays(dates)
     }
 
     const getUserHolidays = async () => {
       setLoading(true)
-      const data = await dataAccess.getUserHolidaysByUserId(auth.user.id)
-      if (data && data.id) {
-        setHolidays(data.holidays)
-        setFirebaseKey(data.firebaseKey)
-        if (calendarRef && calendarRef.current) {
-          setView(calendarRef.current.view)
+      try {
+        const data = await dataAccess.getUserHolidaysByUserId(auth.user.id)
+        if (data && data.id) {
+          setHolidays(data.holidays)
+          setFirebaseKey(data.firebaseKey)
+          if (calendarRef && calendarRef.current) {
+            setView(calendarRef.current.view)
+          }
+          setLoading(false)
+        } else {
+          initUserHolidays()
+          setLoading(false)
         }
-        setLoading(false)
-      } else {
-        initUserHolidays()
+      } catch (err) {
+        error('Cannot get data! Please refresh the page.', 2000)
         setLoading(false)
       }
     }
-    if (auth.user) {
+    if (auth.user && currentYear) {
+      loadDefaultHolidays()
       getUserHolidays()
     }
-  }, [auth.user])
+  }, [auth.user, currentYear, defaultHolidays, currentDate])
 
-  const currentDate = getCurrentDate()
-  const lastDate = getLastDayOfYear()
-  const availableHolidays = holidaysDates.filter(
-    (holiday) => holiday >= currentDate
+  const availableHolidays = defaultHolidays.filter(
+    (holiday) => holiday.date >= currentDate
   )
   const tokenAmount = availableHolidays.length - holidays.length
 
@@ -115,7 +142,7 @@ function Home() {
   }
 
   return (
-    <Main>
+    <Main style={{ display: 'flex', padding: 30 }}>
       <TokenContainer>
         <img
           src={tokenImage}
@@ -128,6 +155,7 @@ function Home() {
       <LoadingScreen loading={auth.loading || loading} />
       <div style={{ flex: 1 }}>
         <StyledCalendar
+          lang="en"
           ref={calendarRef}
           multiple
           weekdaysOnly
@@ -152,7 +180,11 @@ function Home() {
         </ef-button>
       </div>
       <Holidays>
-        <HolidaysTable holidays={holidays} view={view} />
+        <HolidaysTable
+          holidays={holidays}
+          view={view}
+          defaultHolidays={defaultHolidays}
+        ></HolidaysTable>
       </Holidays>
     </Main>
   )
