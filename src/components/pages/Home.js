@@ -59,8 +59,15 @@ function Home() {
     }
   }, [auth.user])
 
+  const currentDate = getCurrentDate()
+  const lastDate = getLastDayOfYear()
+  const availableHolidays = holidaysDates.filter(
+    (holiday) => holiday >= currentDate
+  )
+  const tokenAmount = availableHolidays.length - holidays.length
+
   const handleChange = (e) => {
-    if (e.target.values.length > holidaysDates.length) {
+    if (e.target.values.length > availableHolidays.length) {
       e.target.values = holidays
     } else {
       setHolidays(e.target.values)
@@ -78,9 +85,6 @@ function Home() {
     info('Data saved successfully.', 2000)
   }
 
-  const currentDate = getCurrentDate()
-  const lastDate = getLastDayOfYear()
-
   return (
     <div style={{ display: 'flex', padding: 30 }}>
       <TokenContainer>
@@ -90,7 +94,7 @@ function Home() {
           width="30"
           style={{ marginRight: 5 }}
         />
-        x {holidaysDates.length - holidays.length}
+        x {tokenAmount}
       </TokenContainer>
       <LoadingScreen loading={auth.loading || loading} />
       <div style={{ flex: 1, marginRight: 20 }}>

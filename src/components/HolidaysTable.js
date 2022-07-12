@@ -53,8 +53,8 @@ const getDay = (date) => {
   })
 }
 
-const getMonth = (date) => {
-  return date.toLocaleString('default', { month: 'short' })
+const getMonth = (date, isDigit) => {
+  return date.toLocaleString('default', { month: isDigit ? '2-digit' : 'long' })
 }
 
 const getView = (date) => {
@@ -66,11 +66,11 @@ const getView = (date) => {
 function HolidaysTable({ holidays, view, style }) {
   if (!holidays) return
 
-  const holidayItems = {}
+  let holidayItems = {}
 
   defaultHolidays.forEach((holiday) => {
     const date = new Date(holiday.date)
-    const month = getMonth(date)
+    const month = getMonth(date, true)
 
     if (!holidayItems[month]) {
       holidayItems[month] = []
@@ -86,7 +86,7 @@ function HolidaysTable({ holidays, view, style }) {
   holidays.sort().forEach((holiday) => {
     const date = new Date(holiday)
     const day = getDay(date)
-    const month = getMonth(date)
+    const month = getMonth(date, true)
 
     if (!holidayItems[month]) {
       holidayItems[month] = []
@@ -105,23 +105,40 @@ function HolidaysTable({ holidays, view, style }) {
     }
   })
 
+  holidayItems = Object.keys(holidayItems)
+    .sort()
+    .map((key) => {
+      return {
+        key,
+        month: getMonth(new Date(key)),
+        holidays: holidayItems[key],
+      }
+    })
+
   const viewMonth = new Date(`${view}-01`).toLocaleDateString('default', {
     month: 'short',
   })
 
-  return Object.keys(holidayItems).map((key) => (
-    <Container isActive={key === viewMonth} key={key} style={style}>
-      <Title isActive={key === viewMonth}>{key}</Title>
+  return holidayItems.map((item) => (
+    <Container
+      isActive={item.month === viewMonth}
+      key={item.month}
+      style={style}
+    >
+      <Title isActive={item.month === viewMonth}>{item.month}</Title>
       <ItemContainer>
-        {holidayItems[key]
+        {item.holidays
           .sort((a, b) => a.date - b.date)
-          .map((item) => (
-            <div key={item.date}>
-              <DateText isHighlight={!item.isDefaultHoliday}>
-                {item.date}
+          .map((holiday) => (
+            <div key={holiday.date}>
+              <DateText isHighlight={!holiday.isDefaultHoliday}>
+                {holiday.date}
               </DateText>
-              <StyledLabel isHighlight={!item.isDefaultHoliday} line-clamp="1">
-                {item.name}
+              <StyledLabel
+                isHighlight={!holiday.isDefaultHoliday}
+                line-clamp="1"
+              >
+                {holiday.name}
               </StyledLabel>
             </div>
           ))}
