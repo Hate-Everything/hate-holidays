@@ -6,8 +6,7 @@ const Container = styled.div`
   display: inline-flex;
   flex-direction: column;
   border: 1px solid;
-  border-color: ${(props) =>
-    props.isActive ? `var(--secondary-color)` : 'rgba(255, 255, 255, 0.2)'};
+  border-color: rgba(255, 255, 255, 0.2);
   transition: border-color ease-in-out 0.25s;
   margin: 5px;
   margin-top: 0px;

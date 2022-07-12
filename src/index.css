@@ -6,8 +6,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --primary-color: #0f7173;
-  --secondary-color: #0B4E4F;
+  --primary-color: var(--color-scheme-primary);
+  --secondary-color: var(--color-scheme-secondary);
   --tertiary-color: #0ee28a;
 }
 
