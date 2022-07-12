@@ -184,7 +184,7 @@ function Home() {
           holidays={holidays}
           view={view}
           defaultHolidays={defaultHolidays}
-        ></HolidaysTable>
+        />
       </Holidays>
     </Main>
   )
