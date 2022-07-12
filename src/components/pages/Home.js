@@ -139,8 +139,9 @@ function Home() {
             width: '100%',
             padding: 20,
             marginTop: 5,
-            backgroundColor: 'var(--primary-color)',
             fontWeight: 'bold',
+            color: 'black',
+            backgroundColor: 'var(--tertiary-color)',
           }}
         >
           SAVE MY LOVELY HOLIDAYS
