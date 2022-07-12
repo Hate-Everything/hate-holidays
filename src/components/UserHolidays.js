@@ -15,9 +15,14 @@ const UserContainer = styled.div`
 
 function UserHolidays({ user, holidays }) {
   const [showTable, setShowTable] = useState(false)
+  const [view, setView] = useState('')
 
   const handleClickButton = () => {
     setShowTable(!showTable)
+  }
+
+  const handleViewChange = (e) => {
+    setView(e.detail.value)
   }
 
   return (
@@ -39,10 +44,15 @@ function UserHolidays({ user, holidays }) {
           values={holidays}
           readonly
           style={{ maxWidth: 400, display: 'block' }}
+          viewchange={handleViewChange}
         />
       </div>
       {showTable ? (
-        <HolidaysTable holidays={holidays} style={{ marginTop: 20 }} />
+        <HolidaysTable
+          holidays={holidays}
+          view={view}
+          style={{ marginTop: 20 }}
+        />
       ) : null}
     </UserContainer>
   )
