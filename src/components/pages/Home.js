@@ -13,6 +13,14 @@ const StyledCalendar = styled(Calendar)`
   display: block;
   flex: 1;
   font-size: 14px;
+  &::part(btn-next),
+  &::part(btn-prev) {
+    width: 30px;
+    height: 30px;
+  }
+  &::part(btn-view) {
+    font-size: 14px;
+  }
 `
 
 const TokenContainer = styled.div`
