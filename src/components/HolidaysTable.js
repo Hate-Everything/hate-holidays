@@ -115,9 +115,7 @@ function HolidaysTable({ holidays, view, style, defaultHolidays }) {
       }
     })
 
-  const viewMonth = new Date(`${view}-01`).toLocaleDateString('default', {
-    month: 'short',
-  })
+  const viewMonth = getMonth(new Date(`${view}-01`))
 
   return holidayItems.map((item) => (
     <Container
