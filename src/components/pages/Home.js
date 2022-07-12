@@ -19,7 +19,7 @@ const TokenContainer = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
-  font-weight: bold;
+  font-weight: 600;
   top: 11px;
   right: 86px;
 `
@@ -104,7 +104,7 @@ function Home() {
   }
 
   return (
-    <div style={{ display: 'flex', padding: 30 }}>
+    <div style={{ display: 'flex', padding: 10 }}>
       <TokenContainer>
         <img
           src={tokenImage}

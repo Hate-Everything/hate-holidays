@@ -10,6 +10,7 @@ const Container = styled.div`
     props.isActive ? `var(--secondary-color)` : 'rgba(255, 255, 255, 0.2)'};
   transition: border-color ease-in-out 0.25s;
   margin: 5px;
+  margin-top: 0px;
   min-width: 280px;
   min-height: 200px;
   border-radius: 3px;
@@ -20,7 +21,7 @@ const Title = styled.div`
   justify-content: center;
   background-color: ${(props) =>
     props.isActive ? `var(--primary-color)` : 'rgba(255, 255, 255, 0.2)'};
-  font-weight: bold;
+  font-weight: 600;
   transition: background-color ease-in-out 0.25s;
   padding: 5px;
   border-top-left-radius: 3px;

@@ -8,7 +8,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   --primary-color: #0f7173;
   --secondary-color: #0B4E4F;
-  --tertiary-color:  #0ee28a;
+  --tertiary-color: #0ee28a;
+}
+
+ef-notification {
+  --background-color: var(--tertiary-color);
+  color: black;
 }
 
 code {
