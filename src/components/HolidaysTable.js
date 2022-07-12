@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import Label from './Label'
-import { holidaysMapping } from '../assets/data/th/2022'
+import {
+  holidays as defaultHolidays,
+  holidaysMapping,
+} from '../assets/data/th/2022'
 
 const Container = styled.div`
   display: inline-flex;
@@ -60,16 +63,29 @@ function HolidaysTable({ holidays, view, style }) {
 
   let holidayItems = {}
 
-  holidays.sort().forEach((holiday) => {
-    const date = new Date(holiday)
-    const day = getDay(date)
+  defaultHolidays.forEach((holiday) => {
+    const date = new Date(holiday.date)
     const month = getMonth(date, true)
 
     if (!holidayItems[month]) {
       holidayItems[month] = []
     }
-    const defaultHoliday = holidayItems[month].find((item) => item.date === day)
+    holidayItems[month].push({
+      name: holiday.name,
+      date: getDay(date),
+      view: getView(date),
+      isDefaultHoliday: true,
+    })
+  })
 
+  holidays.sort().forEach((holiday) => {
+    const date = new Date(holiday)
+    const day = getDay(date)
+    const month = getMonth(date, true)
+    if (!holidayItems[month]) {
+      holidayItems[month] = []
+    }
+    const defaultHoliday = holidayItems[month].find((item) => item.date === day)
     if (defaultHoliday) {
       defaultHoliday.isDefaultHoliday = false
     } else {
@@ -81,7 +97,6 @@ function HolidaysTable({ holidays, view, style }) {
       })
     }
   })
-
   holidayItems = Object.keys(holidayItems)
     .sort()
     .map((key) => {
