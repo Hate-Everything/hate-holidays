@@ -6,7 +6,6 @@ import dataAccess from '../../model/dataAccess'
 import LoadingScreen from '../LoadingScreen'
 import Calendar from '../Calendar'
 import HolidaysTable from '../HolidaysTable'
-import { holidaysDates } from '../../assets/data/th/2022'
 import tokenImage from '../../assets/images/token.png'
 import { getCurrentDate, getLastDayOfYear } from '../../helpers/date'
 
@@ -29,14 +28,33 @@ function Home() {
   const auth = useContext(AuthContext)
   const calendarRef = useRef()
   const [holidays, setHolidays] = useState([])
+  const [defaultHolidays, setDefaultHolidays] = useState([])
   const [loading, setLoading] = useState(false)
   const [firebaseKey, setFirebaseKey] = useState('')
   const [view, setView] = useState('')
+  const [currentYear, setCurrentYear] = useState('')
 
   useEffect(() => {
+    setCurrentYear(new Date().toLocaleString('default', { year: 'numeric' }))
+  }, [])
+
+  const currentDate = getCurrentDate()
+  const lastDate = getLastDayOfYear()
+
+  useEffect(() => {
+    const loadDefaultHolidays = async () => {
+      const data = await import(`../../assets/data/th/${currentYear}.js`)
+      if (data && data.default) {
+        setDefaultHolidays(data.default.holidays)
+      }
+    }
+
     const initUserHolidays = async () => {
-      await dataAccess.initUserHolidays(auth.user.id, auth.user.login)
-      setHolidays(holidaysDates)
+      const dates = defaultHolidays
+        .filter((holiday) => holiday.date >= currentDate)
+        .map((data) => data.date)
+      await dataAccess.initUserHolidays(auth.user.id, auth.user.login, dates)
+      setHolidays(dates)
     }
 
     const getUserHolidays = async () => {
@@ -54,15 +72,14 @@ function Home() {
         setLoading(false)
       }
     }
-    if (auth.user) {
+    if (auth.user && currentYear) {
+      loadDefaultHolidays()
       getUserHolidays()
     }
-  }, [auth.user])
+  }, [auth.user, currentYear, defaultHolidays, currentDate])
 
-  const currentDate = getCurrentDate()
-  const lastDate = getLastDayOfYear()
-  const availableHolidays = holidaysDates.filter(
-    (holiday) => holiday >= currentDate
+  const availableHolidays = defaultHolidays.filter(
+    (holiday) => holiday.date >= currentDate
   )
   const tokenAmount = availableHolidays.length - holidays.length
 
@@ -122,7 +139,11 @@ function Home() {
         </ef-button>
       </div>
       <div style={{ flex: 2 }}>
-        <HolidaysTable holidays={holidays} view={view} />
+        <HolidaysTable
+          holidays={holidays}
+          view={view}
+          defaultHolidays={defaultHolidays}
+        />
       </div>
     </div>
   )

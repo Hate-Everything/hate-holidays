@@ -1,4 +1,4 @@
-export const holidays = [
+const holidays = [
   {
     date: '2022-01-03',
     name: 'Substitution for New Year`s Day (Saturday 1st January 2022)',
@@ -81,9 +81,6 @@ export const holidays = [
   },
 ]
 
-export const holidaysMapping = holidays.reduce((acc, holiday) => {
-  const { date, name } = holiday
-  return { ...acc, [date]: name }
-}, {})
-
-export const holidaysDates = holidays.map((holiday) => holiday.date)
+export default {
+  holidays,
+}
