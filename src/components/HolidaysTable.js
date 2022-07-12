@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Label from './Label'
 import { holidaysMapping } from '../assets/data/th/2022'
 
 const Container = styled.div`
@@ -42,6 +43,11 @@ const getDay = (date) => {
 const getMonth = (date, isDigit) => {
   return date.toLocaleString('default', { month: isDigit ? '2-digit' : 'long' })
 }
+
+const StyledLabel = styled(Label)`
+  width: 200px;
+  color: ${(props) => (props.isHighlight ? 'white' : 'gray')};
+`
 
 const getView = (date) => {
   return `${date.getFullYear()}-${date.toLocaleString('default', {
@@ -90,24 +96,29 @@ function HolidaysTable({ holidays, view, style }) {
     month: 'long',
   })
 
-  return holidayItems.map((date) => (
+  return holidayItems.map((item) => (
     <Container
-      isActive={date.month === viewMonth}
-      key={date.month}
+      isActive={item.month === viewMonth}
+      key={item.month}
       style={style}
     >
-      <Title isActive={date.month === viewMonth}>{date.month}</Title>
+      <Title isActive={item.month === viewMonth}>{item.month}</Title>
       <ItemContainer>
-        {holidayItems[key].map((item) => (
-          <div key={item.date}>
-            <DateText isHighlight={!item.isDefaultHoliday}>
-              {item.date}
-            </DateText>
-            <ef-label style={{ width: 200 }} line-clamp="1">
-              {item.name}
-            </ef-label>
-          </div>
-        ))}
+        {item.holidays
+          .sort((a, b) => a.date - b.date)
+          .map((holiday) => (
+            <div key={holiday.date}>
+              <DateText isHighlight={!holiday.isDefaultHoliday}>
+                {holiday.date}
+              </DateText>
+              <StyledLabel
+                isHighlight={!holiday.isDefaultHoliday}
+                line-clamp="1"
+              >
+                {holiday.name}
+              </StyledLabel>
+            </div>
+          ))}
       </ItemContainer>
     </Container>
   ))
