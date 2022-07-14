@@ -125,7 +125,8 @@ function Home() {
 
   const handleChange = (e) => {
     if (e.target.values.length > availableHolidays.length) {
-      warn(`You don't have enough token to use. Skip any national holidays to get more tokens.`, 3000);
+      const notification = warn(`You don't have enough token to use. Skip any national holidays to get more tokens.`, 3000);
+      notification.style.setProperty('--background-color', 'var(--warning-color)')
       e.target.values = holidays
     } else {
       setHolidays(e.target.values)
