@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { info, error } from '@refinitiv-ui/elements/notification'
+import { info, warn, error } from '@refinitiv-ui/elements/notification'
 import { AuthContext } from '../../core/Auth'
 import dataAccess from '../../model/dataAccess'
 import LoadingScreen from '../LoadingScreen'
@@ -105,7 +105,8 @@ function Home() {
           setLoading(false)
         }
       } catch (err) {
-        error('Cannot get data! Please refresh the page.', 2000)
+        const notification = error('Cannot get data! Please refresh the page.')
+        notification.style.setProperty('--background-color', 'var(--error-color)')
         setLoading(false)
       }
     }
@@ -122,6 +123,8 @@ function Home() {
 
   const handleChange = (e) => {
     if (e.target.values.length > availableHolidays.length) {
+      const notification = warn(`You don't have enough token to use. Skip any national holidays to get more tokens.`, 3000);
+      notification.style.setProperty('--background-color', 'var(--warning-color)')
       e.target.values = holidays
     } else {
       setHolidays(e.target.values)
@@ -136,7 +139,7 @@ function Home() {
     setLoading(true)
     await dataAccess.updateUserHolidays(firebaseKey, holidays)
     setLoading(false)
-    info('Data saved successfully.', 2000)
+    info('Your holidays saved successfully. Please update your Outlook calendar accordingly.', 3000);
   }
 
   const handleClickTableTitle = (calendarView) => {
@@ -144,7 +147,7 @@ function Home() {
   }
 
   return (
-    <Main style={{ display: 'flex', padding: 30 }}>
+    <Main style={{ display: 'flex', padding: 10 }}>
       <TokenContainer>
         <img
           src={tokenImage}
