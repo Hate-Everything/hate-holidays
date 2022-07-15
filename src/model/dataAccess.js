@@ -45,7 +45,7 @@ const getUserHolidaysByUserId = async (userId) => {
   const querySnapshot = await getDocs(q)
   const results = []
   if (querySnapshot.empty) {
-    return results
+    return false
   }
   querySnapshot.forEach((data) => {
     const result = data.data()

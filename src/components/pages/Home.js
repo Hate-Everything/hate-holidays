@@ -84,9 +84,7 @@ function Home() {
     }
 
     const initUserHolidays = async () => {
-      const dates = defaultHolidays
-        .filter((holiday) => holiday.date >= currentDate)
-        .map((data) => data.date)
+      const dates = defaultHolidays.map((data) => data.date)
       await dataAccess.initUserHolidays(auth.user.id, auth.user.login, dates)
       setHolidays(dates)
     }
