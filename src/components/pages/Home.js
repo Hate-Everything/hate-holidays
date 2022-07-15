@@ -121,7 +121,7 @@ function Home() {
   const availableHolidays = defaultHolidays.filter(
     (holiday) => holiday.date >= currentDate
   )
-  const tokenAmount = availableHolidays.length - holidays.length
+  const tokenAmount = availableHolidays.length - holidays.filter(holiday => holiday >= currentDate).length
 
   const handleChange = (e) => {
     if (e.target.values.length > availableHolidays.length) {
