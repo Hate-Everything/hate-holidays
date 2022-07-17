@@ -41,6 +41,7 @@ function UserHolidays({ user, holidays }) {
           </ef-button>
         </div>
         <Calendar
+          lang="en"
           values={holidays}
           readonly
           style={{ maxWidth: 400, display: 'block' }}

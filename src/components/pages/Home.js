@@ -8,6 +8,8 @@ import Calendar from '../Calendar'
 import HolidaysTable from '../HolidaysTable'
 import tokenImage from '../../assets/images/token.png'
 import { getCurrentDate, getLastDayOfYear } from '../../helpers/date'
+import Select from '../Select'
+import { SUPPORTED_LOCALES } from '../../assets/data/locales'
 
 const Main = styled.main`
   display: flex;
@@ -36,6 +38,13 @@ const TokenContainer = styled.div`
   position: absolute;
   font-weight: 600;
   top: 11px;
+  left: 200px;
+`
+
+const StyledSelect = styled(Select)`
+  position: absolute;
+  width: 60px;
+  top: 12px;
   right: 86px;
 `
 
@@ -60,31 +69,42 @@ const Holidays = styled.div`
 function Home() {
   const auth = useContext(AuthContext)
   const calendarRef = useRef()
+  const selectRef = useRef()
   const [holidays, setHolidays] = useState([])
-  const [defaultHolidays, setDefaultHolidays] = useState([])
+  const [defaultHolidays, setDefaultHolidays] = useState({})
   const [loading, setLoading] = useState(false)
   const [firebaseKey, setFirebaseKey] = useState('')
   const [view, setView] = useState('')
-  const [currentYear, setCurrentYear] = useState('')
-
-  useEffect(() => {
-    setCurrentYear(new Date().toLocaleString('default', { year: 'numeric' }))
-  }, [])
+  const [locale, setLocale] = useState('th')
 
   const currentDate = getCurrentDate()
   const lastDate = getLastDayOfYear()
 
   useEffect(() => {
+    if (selectRef && selectRef.current) {
+      selectRef.current.data = SUPPORTED_LOCALES
+    }
+  }, [selectRef])
+
+  useEffect(() => {
     const loadDefaultHolidays = async () => {
-      const { lang } = document.documentElement
-      const data = await import(`../../assets/data/${lang}/${currentYear}.js`)
+      const currentYear = new Date().toLocaleString('default', {
+        year: 'numeric',
+      })
+      const data = await import(`../../assets/data/${currentYear}.js`)
       if (data && data.default) {
         setDefaultHolidays(data.default.holidays)
       }
     }
+    loadDefaultHolidays()
+  }, [locale])
 
+  useEffect(() => {
     const initUserHolidays = async () => {
-      const dates = defaultHolidays.map((data) => data.date)
+      const dates = {}
+      Object.keys(defaultHolidays).forEach((key) => {
+        dates[key] = defaultHolidays[key].map((holiday) => holiday.date)
+      })
       await dataAccess.initUserHolidays(auth.user.id, auth.user.login, dates)
       setHolidays(dates)
     }
@@ -93,6 +113,7 @@ function Home() {
       setLoading(true)
       try {
         const data = await dataAccess.getUserHolidaysByUserId(auth.user.id)
+
         if (data && data.id) {
           setHolidays(data.holidays)
           setFirebaseKey(data.firebaseKey)
@@ -106,28 +127,39 @@ function Home() {
         }
       } catch (err) {
         const notification = error('Cannot get data! Please refresh the page.')
-        notification.style.setProperty('--background-color', 'var(--error-color)')
+        notification.style.setProperty(
+          '--background-color',
+          'var(--error-color)'
+        )
         setLoading(false)
       }
     }
-    if (auth.user && currentYear) {
-      loadDefaultHolidays()
+    if (auth.user && defaultHolidays[locale].length) {
       getUserHolidays()
     }
-  }, [auth.user, currentYear, defaultHolidays, currentDate])
+  }, [auth.user, defaultHolidays, currentDate])
 
-  const availableHolidays = defaultHolidays.filter(
-    (holiday) => holiday.date >= currentDate
-  )
-  const tokenAmount = availableHolidays.length - holidays.length
+  const tokenAmount = defaultHolidays.locale
+    ? defaultHolidays[locale].length - holidays.length
+    : 0
 
   const handleChange = (e) => {
-    if (e.target.values.length > availableHolidays.length) {
-      const notification = warn(`You don't have enough token to use. Skip any national holidays to get more tokens.`, 3000);
-      notification.style.setProperty('--background-color', 'var(--warning-color)')
-      e.target.values = holidays
+    if (e.target.values.length > defaultHolidays[locale].length) {
+      const notification = warn(
+        `You don't have enough token to use. Skip any national holidays to get more tokens.`,
+        3000
+      )
+      notification.style.setProperty(
+        '--background-color',
+        'var(--warning-color)'
+      )
+      e.target.values = holidays[locale]
     } else {
-      setHolidays(e.target.values)
+      const newHolidays = {
+        ...holidays,
+        [locale]: e.target.values,
+      }
+      setHolidays(newHolidays)
     }
   }
 
@@ -139,11 +171,18 @@ function Home() {
     setLoading(true)
     await dataAccess.updateUserHolidays(firebaseKey, holidays)
     setLoading(false)
-    info('Your holidays saved successfully. Please update your Outlook calendar accordingly.', 3000);
+    info(
+      'Your holidays saved successfully. Please update your Outlook calendar accordingly.',
+      3000
+    )
   }
 
   const handleClickTableTitle = (calendarView) => {
     setView(calendarView)
+  }
+
+  const handleChangeSelect = (e) => {
+    setLocale(e.detail.value)
   }
 
   return (
@@ -157,6 +196,11 @@ function Home() {
         />
         x {tokenAmount}
       </TokenContainer>
+      <StyledSelect
+        ref={selectRef}
+        onchange={handleChangeSelect}
+        value={locale}
+      />
       <LoadingScreen loading={auth.loading || loading} />
       <div style={{ flex: 1, maxWidth: 600 }}>
         <StyledCalendar
@@ -166,7 +210,7 @@ function Home() {
           weekdaysOnly
           min={currentDate}
           max={lastDate}
-          values={holidays}
+          values={holidays[locale] || []}
           view={view}
           onchange={handleChange}
           viewchange={handleViewChange}
@@ -187,9 +231,9 @@ function Home() {
       </div>
       <Holidays>
         <HolidaysTable
-          holidays={holidays}
+          holidays={holidays[locale] || []}
           view={view}
-          defaultHolidays={defaultHolidays}
+          defaultHolidays={defaultHolidays[locale] || []}
           handleClickTableTitle={handleClickTableTitle}
         />
       </Holidays>
