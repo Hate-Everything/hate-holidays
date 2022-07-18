@@ -139,9 +139,10 @@ function Home() {
     }
   }, [auth.user, defaultHolidays, currentDate])
 
-  const tokenAmount = defaultHolidays.locale
-    ? defaultHolidays[locale].length - holidays.length
-    : 0
+  const tokenAmount =
+    defaultHolidays[locale] && holidays[locale]
+      ? defaultHolidays[locale].length - holidays[locale].length
+      : 0
 
   const handleChange = (e) => {
     if (e.target.values.length > defaultHolidays[locale].length) {

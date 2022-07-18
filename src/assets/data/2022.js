@@ -81,7 +81,7 @@ const holidays = {
       name: 'Christmas Day',
     },
   ],
-  en_GB: [
+  gb: [
     {
       date: '2022-01-03',
       name: 'Substitution for New Year`s Day (Saturday 1st January 2022)',
