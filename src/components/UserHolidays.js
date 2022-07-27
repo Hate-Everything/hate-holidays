@@ -13,7 +13,7 @@ const UserContainer = styled.div`
   margin: 10px;
 `
 
-function UserHolidays({ user, holidays }) {
+function UserHolidays({ user, holidays, defaultHolidays }) {
   const [showTable, setShowTable] = useState(false)
   const [view, setView] = useState('')
 
@@ -51,8 +51,10 @@ function UserHolidays({ user, holidays }) {
       {showTable ? (
         <HolidaysTable
           holidays={holidays}
+          defaultHolidays={defaultHolidays}
           view={view}
           style={{ marginTop: 20 }}
+          handleClickTableTitle={() => {}}
         />
       ) : null}
     </UserContainer>
