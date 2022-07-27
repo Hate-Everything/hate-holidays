@@ -33,6 +33,10 @@ function Team() {
   const selectRef = useRef()
 
   const currentDate = getCurrentDate()
+  const viewMonth = `${new Date().getFullYear()}-${new Date().toLocaleString(
+    'default',
+    { month: '2-digit' }
+  )}`
 
   const todayOffUsers = []
 
@@ -98,6 +102,7 @@ function Team() {
         <UserHolidays
           key={`${user.name}-${index}`}
           user={user}
+          defaultView={viewMonth}
           holidays={user.holidays[locale]}
           defaultHolidays={defaultHolidays[locale]}
         />
