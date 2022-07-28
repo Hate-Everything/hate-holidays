@@ -38,11 +38,11 @@ function Team() {
     { month: '2-digit' }
   )}`
 
-  const todayOffUsers = []
+  const todayOnDutyUsers = []
 
   userHolidays.forEach((user) => {
-    if (user.holidays[locale].some((day) => day === currentDate)) {
-      todayOffUsers.push(user.name)
+    if (!user.holidays[locale].some((day) => day === currentDate)) {
+      todayOnDutyUsers.push(user.name)
     }
   })
 
@@ -88,10 +88,11 @@ function Team() {
         value={locale}
       />
 
-      <div style={{ display: 'flex', width: '100%' }}>
-        <div>On Holiday Today:</div>
-        {todayOffUsers.length ? (
-          todayOffUsers.map((user) => <UserText>{user}</UserText>)
+      <div style={{ display: 'flex', width: '100%', marginLeft: 10, alignItems: 'center' }}>
+        <span style={{ width: 12, height: 12, marginRight: 5, borderRadius: '50%', backgroundColor: '#0ee28a' }} />
+        <div>Today On Duty :</div>
+        {todayOnDutyUsers.length ? (
+          todayOnDutyUsers.map((user) => <UserText>{user}</UserText>)
         ) : (
           <UserText>none</UserText>
         )}
