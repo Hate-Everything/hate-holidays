@@ -28,12 +28,6 @@ const ItemContainer = styled.div`
   padding: 15px;
 `
 
-const DateText = styled.h6`
-  display: inline-block;
-  margin-right: 5px;
-  color: ${(props) => (props.isHighlight ? 'white' : 'gray')};
-`
-
 const StyledLabel = styled(Label)`
   width: 200px;
   color: ${(props) => (props.isHighlight ? 'white' : 'gray')};
@@ -133,14 +127,11 @@ function HolidaysTable({
           .sort((a, b) => a.date - b.date)
           .map((holiday) => (
             <div key={holiday.date}>
-              <DateText isHighlight={!holiday.isDefaultHoliday}>
-                {holiday.date}
-              </DateText>
               <StyledLabel
                 isHighlight={!holiday.isDefaultHoliday}
                 line-clamp="1"
               >
-                {holiday.name}
+                {holiday.date} {holiday.name}
               </StyledLabel>
             </div>
           ))}
