@@ -29,6 +29,10 @@ const holidays = {
       name: 'Coronation Day',
     },
     {
+      date: '2023-05-05',
+      name: 'Additional Special Holiday',
+    },    
+    {
       date: '2023-06-05',
       name: 'Substitution for H.M. Queen Suthida Bajrasudhabimalalakshana Birthday',
     },
