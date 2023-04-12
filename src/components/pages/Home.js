@@ -67,7 +67,8 @@ const Holidays = styled.div`
 `
 
 function Home() {
-  const auth = useContext(AuthContext)
+  const { user, loading: authLoading } = useContext(AuthContext)
+
   const calendarRef = useRef()
   const selectRef = useRef()
   const [holidays, setHolidays] = useState([])
@@ -105,14 +106,14 @@ function Home() {
       Object.keys(defaultHolidays).forEach((key) => {
         dates[key] = defaultHolidays[key].map((holiday) => holiday.date)
       })
-      await dataAccess.initUserHolidays(auth.user.id, auth.user.login, dates)
+      await dataAccess.initUserHolidays(user.id, user.login, dates)
       setHolidays(dates)
     }
 
     const getUserHolidays = async () => {
       setLoading(true)
       try {
-        const data = await dataAccess.getUserHolidaysByUserId(auth.user.id)
+        const data = await dataAccess.getUserHolidaysByUserId(user.id)
 
         if (data && data.id) {
           setHolidays(data.holidays)
@@ -134,10 +135,10 @@ function Home() {
         setLoading(false)
       }
     }
-    if (auth.user && defaultHolidays[locale].length) {
+    if (user && defaultHolidays[locale].length) {
       getUserHolidays()
     }
-  }, [auth.user, defaultHolidays, currentDate])
+  }, [user, defaultHolidays, currentDate])
 
   const tokenAmount =
     defaultHolidays[locale] && holidays[locale]
@@ -202,7 +203,7 @@ function Home() {
         onchange={handleChangeSelect}
         value={locale}
       />
-      <LoadingScreen loading={auth.loading || loading} />
+      <LoadingScreen loading={authLoading || loading} />
       <div style={{ flex: 1, maxWidth: 600 }}>
         <StyledCalendar
           lang="en"

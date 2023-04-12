@@ -181,19 +181,19 @@ const svgStyle = {
 
 function Login() {
   const navigate = useNavigate()
-  const auth = useContext(AuthContext)
   const [searchParams] = useSearchParams()
   const code = searchParams.get('code')
+  const { loading, login, user } = useContext(AuthContext)
 
   React.useEffect(() => {
-    if (!auth.loading && auth.user) {
+    if (!loading && user) {
       navigate('/', { replace: true })
     }
-  }, [auth.loading, auth.user])
+  }, [loading, user])
 
   React.useEffect(() => {
     if (code) {
-      auth.login(code, () => {
+      login(code, () => {
         navigate('/', { replace: true })
       })
     }
@@ -229,7 +229,7 @@ function Login() {
         </svg>
         <LoginLabel>Sign in with GitHub</LoginLabel>
       </StyledLink>
-      <LoadingScreen loading={auth.loading} />
+      <LoadingScreen loading={loading} />
     </Container>
   )
 }

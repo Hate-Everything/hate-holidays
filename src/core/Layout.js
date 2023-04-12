@@ -74,7 +74,7 @@ function ProfileMenu({ user, slot, logout }) {
 }
 
 function Layout() {
-  const auth = useContext(AuthContext)
+  const { logout, user } = useContext(AuthContext)
 
   return (
     <div>
@@ -83,7 +83,6 @@ function Layout() {
           <defs id="SvgjsDefs1494" />
           <g
             id="SvgjsG1495"
-            featurekey="MI9fam-0"
             transform="matrix(1.893939393939394,0,0,1.893939393939394,12,0)"
             fill="currentColor"
           >
@@ -98,7 +97,7 @@ function Layout() {
           </g>
         </svg>
         <div slot="left">Hate Holidays</div>
-        <ProfileMenu logout={auth.logout} user={auth.user} slot="right" />
+        <ProfileMenu logout={logout} user={user} slot="right" />
       </StyledHeader>
       <Outlet />
     </div>
