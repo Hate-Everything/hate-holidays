@@ -5,7 +5,6 @@ function LogoImage() {
     <svg viewBox="0 0 190.47619047619048 298.1937859145057">
       <g
         id="SvgjsG1495"
-        featurekey="MI9fam-0"
         transform="matrix(1.893939393939394,0,0,1.893939393939394,12,0)"
         fill="#0081c6"
       >
@@ -20,7 +19,6 @@ function LogoImage() {
       </g>
       <g
         id="SvgjsG1496"
-        featurekey="EI8VXn-0"
         transform="matrix(3.7202383169815785,0,0,3.7202383169815785,-5.952382726328819,186.1577372304385)"
         fill="#48466d"
       >
@@ -28,7 +26,6 @@ function LogoImage() {
       </g>
       <g
         id="SvgjsG1497"
-        featurekey="EI8VXn-1"
         transform="matrix(1.9108765581280704,0,0,1.9108765581280704,-3.057403221946471,259.8786981036709)"
         fill="#48466d"
       >

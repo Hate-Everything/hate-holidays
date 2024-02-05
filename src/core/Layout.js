@@ -61,7 +61,7 @@ function ProfileMenu({ user, slot, logout }) {
         onClick={handleClickAvatar}
       />
       <OverlayMenu
-        position="bottom-end"
+        position={['bottom-end']}
         positionTarget={imageRef.current}
         opened={opened}
         onoutsideclick={handleClosePopup}
@@ -83,7 +83,6 @@ function Layout() {
           <defs id="SvgjsDefs1494" />
           <g
             id="SvgjsG1495"
-            featurekey="MI9fam-0"
             transform="matrix(1.893939393939394,0,0,1.893939393939394,12,0)"
             fill="currentColor"
           >

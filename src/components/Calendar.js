@@ -1,10 +1,15 @@
 import React from 'react'
-import { createComponent } from '@lit-labs/react'
+import { createComponent } from '@lit/react'
 import { Calendar as EfCalendar } from '@refinitiv-ui/elements/calendar'
 
-const Calendar = createComponent(React, 'ef-calendar', EfCalendar, {
-  onchange: 'value-changed',
-  viewchange: 'view-changed',
+const Calendar = createComponent({
+  tagName: 'ef-calendar',
+  elementClass: EfCalendar,
+  react: React,
+  events: {
+    onchange: 'value-changed',
+    viewchange: 'view-changed',
+  },
 })
 
 export default Calendar
