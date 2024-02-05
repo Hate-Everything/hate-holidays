@@ -1,8 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Routes from './core/Routes'
+
+import '@refinitiv-ui/halo-theme/dark/css/native-elements.css'
+
+// Overrides Halo
 import './index.css'
-import './themes/dark'
+
+import '@refinitiv-ui/elements/calendar/themes/halo/dark'
+import '@refinitiv-ui/elements/item/themes/halo/dark'
+import '@refinitiv-ui/elements/toggle/themes/halo/dark'
+import '@refinitiv-ui/elements/datetime-picker/themes/halo/dark'
+import '@refinitiv-ui/elements/header/themes/halo/dark'
+import '@refinitiv-ui/elements/overlay-menu/themes/halo/dark'
+import '@refinitiv-ui/elements/loader/themes/halo/dark'
+import '@refinitiv-ui/elements/label/themes/halo/dark'
+import '@refinitiv-ui/elements/notification/themes/halo/dark'
+import '@refinitiv-ui/elements/select/themes/halo/dark'
+
 // eslint-disable-next-line import/no-named-as-default-member
 import reportWebVitals from './reportWebVitals'
 
