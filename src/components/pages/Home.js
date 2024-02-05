@@ -91,11 +91,12 @@ function Home() {
       const currentYear = new Date().toLocaleString('default', {
         year: 'numeric',
       })
-      const data = await import(`../../assets/data/${currentYear}.js`)
+      const data = await import(`../../assets/data/${currentYear}.json`)
       if (data && data.default) {
-        setDefaultHolidays(data.default.holidays)
+        setDefaultHolidays(data.default)
       }
     }
+
     loadDefaultHolidays()
   }, [locale])
 
@@ -134,7 +135,11 @@ function Home() {
         setLoading(false)
       }
     }
-    if (auth.user && defaultHolidays[locale].length) {
+    if (
+      auth.user &&
+      defaultHolidays[locale] &&
+      defaultHolidays[locale].length
+    ) {
       getUserHolidays()
     }
   }, [auth.user, defaultHolidays, currentDate])
