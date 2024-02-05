@@ -4,18 +4,14 @@
   "private": true,
   "homepage": "/",
   "dependencies": {
-    "@backlineint/results-tracker": "^1.0.0",
     "@lit/react": "^1.0.3",
     "@refinitiv-ui/elements": "^7.10.3",
     "@refinitiv-ui/halo-theme": "^7.3.3",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "firebase": "^9.9.0",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-router-dom": "^6.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
@@ -36,9 +32,7 @@
   },
   "browserslist": {
     "production": [
-      "last 2 chrome version",
-      "last 2 firefox version",
-      "last 2 safari version"
+      "defaults and fully supports es6-module"
     ],
     "development": [
       "last 1 chrome version",
