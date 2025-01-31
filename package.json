@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "/",
   "dependencies": {
-    "@lit/react": "^1.0.3",
+    "@lit/react": "^1.0.7",
     "@refinitiv-ui/elements": "^7.10.3",
     "@refinitiv-ui/halo-theme": "^7.3.3",
     "axios": "^0.27.2",
