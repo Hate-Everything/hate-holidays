@@ -1,0 +1,114 @@
+{
+  "th": [
+    {
+      "date": "2026-01-01",
+      "name": "New Year's Day"
+    },
+    {
+      "date": "2026-01-02",
+      "name": "Additional Special Holiday"
+    },
+    {
+      "date": "2026-03-03",
+      "name": "Makha Bucha Day"
+    },
+    {
+      "date": "2026-04-06",
+      "name": "Chakri Memorial Day"
+    },
+    {
+      "date": "2026-04-13",
+      "name": "Songkran Festival"
+    },
+    {
+      "date": "2026-04-14",
+      "name": "Songkran Festival"
+    },
+    {
+      "date": "2026-04-15",
+      "name": "Songkran Festival"
+    },
+    {
+      "date": "2026-05-01",
+      "name": "National Labour Day"
+    },
+    {
+      "date": "2026-05-04",
+      "name": "Coronation Day"
+    },
+    {
+      "date": "2026-06-01",
+      "name": "Substitution for Visakha Bucha Day"
+    },
+    {
+      "date": "2026-06-03",
+      "name": "H.M. Queen Suthida Bajrasudhabimalalakshana's Birthday"
+    },
+    {
+      "date": "2026-07-28",
+      "name": "H.M. King Maha Vajiralongkorn Phra Vajiraklaochaoyuhua's Birthday"
+    },
+    {
+      "date": "2026-07-29",
+      "name": "Asarnha Bucha Day"
+    },
+    {
+      "date": "2026-08-12",
+      "name": "H.M. Queen Sirikit The Queen Mother's Birthday / Mother's Day"
+    },
+    {
+      "date": "2026-10-13",
+      "name": "H.M. King Bhumibol Adulyadej The Great Memorial Day"
+    },
+    {
+      "date": "2026-10-23",
+      "name": "H.M. King Chulalongkorn the Great Memorial Day"
+    },
+    {
+      "date": "2026-12-07",
+      "name": "Substitution for H.M. King Bhumibol Adulyadej, The Great's Birthday / National Day / Father's Day"
+    },
+    {
+      "date": "2026-12-10",
+      "name": "Constitution Day"
+    },
+    {
+      "date": "2026-12-31",
+      "name": "New Year's Eve"
+    }
+  ],
+  "gb": [
+    {
+      "date": "2026-01-01",
+      "name": "New Year's Day"
+    },
+    {
+      "date": "2026-04-03",
+      "name": "Good Friday"
+    },
+    {
+      "date": "2026-04-06",
+      "name": "Easter Monday"
+    },
+    {
+      "date": "2026-05-04",
+      "name": "Early May Bank Holiday"
+    },
+    {
+      "date": "2026-05-25",
+      "name": "Spring Bank Holiday"
+    },
+    {
+      "date": "2026-08-31",
+      "name": "Summer Bank Holiday"
+    },
+    {
+      "date": "2026-12-25",
+      "name": "Christmas Day"
+    },
+    {
+      "date": "2026-12-28",
+      "name": "Substitute Bank Holiday for Boxing Day"
+    }
+  ]
+}
